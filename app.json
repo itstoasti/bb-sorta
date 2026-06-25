@@ -21,10 +21,43 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "com.google.android.gms.permission.AD_ID"
+      ],
+      "package": "com.deanfieldz.bobasort"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-tracking-transparency",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-5918407268001346~8820719361",
+          "iosAppId": "ca-app-pub-5918407268001346~8820719361"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4b15cb81-d95f-40e5-bce5-83a0a447f2e1"
+      }
+    },
+    "owner": "deanfieldz"
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-5918407268001346~8820719361",
+    "ios_app_id": "ca-app-pub-5918407268001346~8820719361"
   }
 }

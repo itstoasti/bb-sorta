@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boba Sort — Cozy Fluid Straw Puzzle</title>
+  <meta name="description" content="Sort flavors, match bubbles, and decorate your own cartoon boba shop in this relaxing ASMR sorting puzzle. Download Boba Sort on Google Play!">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Styling System variables */
+    :root {
+      --bg-color: #0B0C10;
+      --card-bg: rgba(26, 26, 38, 0.65);
+      --taro-purple: #B39DDB;
+      --taro-glow: rgba(179, 157, 219, 0.4);
+      --matcha-green: #81C784;
+      --text-main: #FFFFFF;
+      --text-sub: rgba(255, 255, 255, 0.65);
+      --glow-accent: #00E5FF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+    }
+
+    /* Ambient Bubble Background Animation */
+    .bubble-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -60px;
+      background-color: rgba(179, 157, 219, 0.1);
+      border: 1px solid rgba(179, 157, 219, 0.2);
+      border-radius: 50%;
+      animation: floatUp 12s infinite ease-in-out;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.1) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-name {
+      font-size: 24px;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, var(--text-main), var(--taro-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--taro-purple);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 80px 0;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-content {
+      flex: 1.2;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background-color: rgba(179, 157, 219, 0.15);
+      border: 1px solid rgba(179, 157, 219, 0.3);
+      border-radius: 20px;
+      color: var(--taro-purple);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-size: 52px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--taro-purple), var(--glow-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: var(--text-sub);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 18px;
+      font-weight: 900;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--taro-purple);
+      color: var(--bg-color);
+      box-shadow: 0 6px 20px var(--taro-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px var(--taro-glow);
+      filter: brightness(1.05);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background-color: var(--taro-purple);
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.15;
+      z-index: -1;
+      top: 10%;
+    }
+
+    .mockup-img {
+      width: 320px;
+      border-radius: 36px;
+      border: 6px solid #1c1c28;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      transform: rotate(2deg);
+      transition: transform 0.5s;
+    }
+
+    .mockup-img:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    /* Features Grid */
+    .features-section {
+      padding: 80px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-title {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-sub);
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.3s;
+      backdrop-filter: blur(12px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(179, 157, 219, 0.3);
+      box-shadow: 0 10px 30px rgba(179, 157, 219, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .feature-name {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .feature-desc {
+      color: var(--text-sub);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Privacy Policy Container */
+    .privacy-section {
+      padding: 80px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .privacy-content {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 28px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .privacy-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .privacy-body {
+      font-size: 15px;
+      color: var(--text-sub);
+      overflow-y: auto;
+      max-height: 500px;
+      padding-right: 16px;
+    }
+
+    .privacy-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .privacy-body::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 3px;
+    }
+
+    .privacy-body::-webkit-scrollbar-thumb {
+      background: rgba(179, 157, 219, 0.3);
+      border-radius: 3px;
+    }
+
+    .privacy-body h3 {
+      font-size: 18px;
+      color: var(--text-main);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-body p {
+      margin-bottom: 16px;
+    }
+
+    .privacy-body ul {
+      margin-bottom: 16px;
+      padding-left: 20px;
+    }
+
+    .privacy-body li {
+      margin-bottom: 6px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 14px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 900px) {
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 0;
+      }
+      .hero-title {
+        font-size: 40px;
+      }
+      .cta-buttons {
+        justify-content: center;
+      }
+      .mockup-img {
+        width: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Boba Bubbles -->
+  <div class="bubble-bg" id="bubbles"></div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo-container">
+          <span class="brand-name">Boba Sort</span>
+        </div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="./privacy.html">Privacy Policy</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Landing Area -->
+  <main class="container">
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="badge">🧋 Sorting Puzzle Game</span>
+        <h1 class="hero-title">Cozy Puzzle Sorting <span>Flows</span></h1>
+        <p class="hero-desc">
+          Relax with the ultimate straw-sorting puzzle game! Transfer flavored milks, align tapioca boba pearls, and grow your custom catalog of cute cups and barista shop decors. Solvable puzzles guarantees hours of pure ASMR tranquility.
+        </p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary">
+            <span>Get it on Google Play</span>
+          </a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="../assets/no_ads_banner.png" alt="Boba Sort App Screenshot" class="mockup-img">
+      </div>
+    </section>
+
+    <!-- Key Features section -->
+    <section class="features-section" id="features">
+      <h2 class="section-title">Why Play Boba Sort?</h2>
+      <p class="section-subtitle">A cute, competitive sorting experience designed to satisfy your puzzle cravings.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧋</div>
+          <h3 class="feature-name">LIFO Straw Buffer</h3>
+          <p class="feature-desc">Use a strategic 2-layer straw buffer to hold and swap flavors! Adds an exciting secondary layer of strategic puzzle sorting.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-name">Custom Barista Shop</h3>
+          <p class="feature-desc">Unlock cozy items like neon signs, ivy plants, and cute character frames to personalize your facade wood cafe counter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3 class="feature-name">ASMR Chime Combos</h3>
+          <p class="feature-desc">Hear satisfying clues and pouring chimes that increase in pitch on consecutive combos, all accompanied by haptic win spring bounces.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Boba Sort. Created by deanfieldz. All rights reserved. | <a href="./privacy.html" style="color: var(--taro-purple); text-decoration: none; font-weight: 700;">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <!-- Generate Bubble script -->
+  <script>
+    const bubbleContainer = document.getElementById('bubbles');
+    const bubbleCount = 20;
+
+    for (let i = 0; i < bubbleCount; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      
+      // Random coordinates
+      const size = Math.floor(Math.random() * 40) + 15;
+      const left = Math.floor(Math.random() * 100);
+      const delay = Math.random() * 10;
+      const duration = Math.random() * 8 + 8;
+
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${left}%`;
+      bubble.style.animationDelay = `${delay}s`;
+      bubble.style.animationDuration = `${duration}s`;
+
+      bubbleContainer.appendChild(bubble);
+    }
+  </script>
+</body>
+</html>
