@@ -1336,6 +1336,15 @@ const CosmicTerminalIllustration: React.FC = () => (
         <Modal visible={customAlert.visible} transparent={true} animationType="fade" onRequestClose={() => setCustomAlert(null)}>
           <View style={styles.alertOverlay}>
             <View style={[styles.alertCard, customAlert.stationImage && { borderColor: customAlert.iconColor || 'rgba(102, 252, 241, 0.4)' }]}>
+              {/* Boba Cafe themed background banner */}
+              <ImageBackground
+                source={require('../../assets/boba_cafe_banner.png')}
+                style={StyleSheet.absoluteFillObject}
+                resizeMode="cover"
+              >
+                <View style={[StyleSheet.absoluteFillObject, { backgroundColor: 'rgba(18, 14, 26, 0.94)' }]} />
+              </ImageBackground>
+
               {customAlert.stationImage ? (
                 <Image 
                   source={customAlert.stationImage} 
@@ -1922,6 +1931,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 20,
     elevation: 12,
+    overflow: 'hidden',
   },
   alertIconWrapper: {
     width: 64,
