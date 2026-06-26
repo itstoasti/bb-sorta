@@ -1230,7 +1230,7 @@ const CosmicTerminalIllustration: React.FC = () => (
           <Text style={styles.backText}>Lobby</Text>
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>Sorting Path</Text>
+        <Text style={styles.headerTitle}>Sweet Travels</Text>
 
         <View style={styles.rightHeaderControls}>
           <TouchableOpacity 
