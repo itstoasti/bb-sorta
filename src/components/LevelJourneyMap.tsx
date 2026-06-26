@@ -563,6 +563,14 @@ const CHAPTERS = [
   }
 ];
 
+const TOWN_BACKGROUNDS: Record<number, any> = {
+  1: require('../../assets/matcha_meadows_bg.png'),
+  2: require('../../assets/sakura_station_bg.png'),
+  3: require('../../assets/coconut_coast_bg.png'),
+  4: require('../../assets/taro_town_bg.png'),
+  5: require('../../assets/neon_nebula_bg.png'),
+};
+
 export const LevelJourneyMap: React.FC<LevelJourneyMapProps> = ({
   coins,
   unlockedLevel,
@@ -1063,6 +1071,15 @@ const CosmicTerminalIllustration: React.FC = () => (
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContentCard}>
+            {/* Boba Cafe themed background banner */}
+            <ImageBackground
+              source={require('../../assets/boba_cafe_banner.png')}
+              style={StyleSheet.absoluteFillObject}
+              resizeMode="cover"
+            >
+              <View style={[StyleSheet.absoluteFillObject, { backgroundColor: 'rgba(18, 14, 26, 0.92)' }]} />
+            </ImageBackground>
+
             <View style={styles.modalHeaderRow}>
               <Text style={styles.modalTitleText}>🗺️ Town Teleport Map</Text>
               <TouchableOpacity 
@@ -1093,16 +1110,27 @@ const CosmicTerminalIllustration: React.FC = () => (
                 const maxStars = 20 * 3; // 20 levels * 3 stars
 
                 return (
-                  <View 
+                  <ImageBackground 
                     key={`town_card_${chap.id}`}
+                    source={TOWN_BACKGROUNDS[chap.id]}
                     style={[
                       styles.townCard,
                       { 
                         borderColor: isUnlocked ? chap.themeColor : 'rgba(255,255,255,0.06)',
-                        backgroundColor: isUnlocked ? 'rgba(20, 17, 30, 0.9)' : 'rgba(10, 8, 15, 0.9)',
                       }
                     ]}
+                    resizeMode="cover"
                   >
+                    {/* Glassmorphic/translucent overlay overlaying the background image */}
+                    <View 
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        {
+                          backgroundColor: isUnlocked ? 'rgba(20, 16, 30, 0.82)' : 'rgba(8, 6, 12, 0.93)'
+                        }
+                      ]}
+                    />
+
                     {/* Glow backdrop for unlocked cards */}
                     {isUnlocked && (
                       <View style={[styles.townCardGlow, { backgroundColor: chap.themeColor }]} />
@@ -1118,7 +1146,7 @@ const CosmicTerminalIllustration: React.FC = () => (
                         />
                         <Text style={[
                           styles.townNameText,
-                          { color: isUnlocked ? '#FFF' : '#666' }
+                          { color: isUnlocked ? '#FFF' : '#777' }
                         ]}>
                           {chap.name}
                         </Text>
@@ -1143,7 +1171,7 @@ const CosmicTerminalIllustration: React.FC = () => (
 
                     <Text style={[
                       styles.townDescText,
-                      { color: isUnlocked ? '#A9A9B0' : '#444' }
+                      { color: isUnlocked ? '#E0E0E6' : '#555' }
                     ]}>
                       {chap.description}
                     </Text>
@@ -1151,7 +1179,7 @@ const CosmicTerminalIllustration: React.FC = () => (
                     <View style={styles.townCardFooter}>
                       <Text style={[
                         styles.townProgressText,
-                        { color: isUnlocked ? 'rgba(255,255,255,0.4)' : '#333' }
+                        { color: isUnlocked ? 'rgba(255,255,255,0.5)' : '#444' }
                       ]}>
                         Levels {chap.startLevel} - {chap.endLevel} {isUnlocked && `• ⭐ ${earnedStars}/${maxStars}`}
                       </Text>
@@ -1199,7 +1227,7 @@ const CosmicTerminalIllustration: React.FC = () => (
                         </TouchableOpacity>
                       )}
                     </View>
-                  </View>
+                  </ImageBackground>
                 );
               })}
             </ScrollView>
@@ -2020,6 +2048,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 15,
     elevation: 10,
+    overflow: 'hidden',
   },
   modalHeaderRow: {
     flexDirection: 'row',
